@@ -3,14 +3,24 @@ import GlobalStyle from "./GlobalStyles";
 import Movies from "./components/Movies";
 import Sessions from "./components/Sessions";
 import Seats from "./components/Seats";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
+
 function App() {
+  const [movies, setMovies] = useState(null);
+  useEffect(() => {
+    const promise = axios.get(URL);
+    promise.then((res) => setMovies(res.data));
+  }, []);
   return (
     <>
       <GlobalStyle />
       <StyledApp>
         <StyledHeader>CINEFLEX</StyledHeader>
         <AppContent>
-          <Movies />
+          <Movies movies={movies} />
           <Sessions />
           <Seats />
         </AppContent>
@@ -34,6 +44,7 @@ const StyledHeader = styled.div`
   align-items: center;
   position: fixed;
   top: 0;
+  z-index: 2;
 `;
 
 const AppContent = styled.div`
@@ -41,6 +52,5 @@ const AppContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `;
 export default App;
