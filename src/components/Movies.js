@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { PageTitle } from "./Styles";
-export default function Movies({ movies }) {
+export default function Movies({ movies, selectMovie }) {
   return (
     <>
       <PageTitle>Selecione o filme</PageTitle>
@@ -8,8 +8,8 @@ export default function Movies({ movies }) {
         {movies === null
           ? "Carregando..."
           : movies.map((m) => (
-              <MovieCard>
-                <img key={m.id} src={m.posterURL} alt={m.title} />
+              <MovieCard onClick={() => selectMovie(m)} key={m.id}>
+                <img src={m.posterURL} alt={m.title} />
               </MovieCard>
             ))}
       </MoviesContainer>

@@ -5,11 +5,12 @@ import Sessions from "./components/Sessions";
 import Seats from "./components/Seats";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
-const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
+import { URL } from "./consts";
 
 function App() {
   const [movies, setMovies] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
   useEffect(() => {
     const promise = axios.get(URL);
     promise.then((res) => setMovies(res.data));
@@ -20,8 +21,8 @@ function App() {
       <StyledApp>
         <StyledHeader>CINEFLEX</StyledHeader>
         <AppContent>
-          <Movies movies={movies} />
-          <Sessions />
+          <Movies movies={movies} selectMovie={setSelectedMovie} />
+          <Sessions movie={selectedMovie} />
           <Seats />
         </AppContent>
       </StyledApp>
