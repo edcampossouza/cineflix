@@ -15,6 +15,8 @@ export default function Seats() {
   const { idSessao } = useParams();
   const [seats, setSeats] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [name, setName] = useState("");
+  const [cpf, setCpf] = useState("");
 
   function handleClick(seat) {
     if (!seat.isAvailable) alert("Esse assento não está disponível");
@@ -26,11 +28,30 @@ export default function Seats() {
   }
 
   function handleReservation() {
-    if (selectedSeats.length !== 0) {
-      console.log(selectedSeats);
+    if (validadeInputs()) {
+      const promise = axios.post(`${URL}/seats/book-many`, {
+        ids: selectedSeats.map((s) => s.id),
+        name,
+        cpf,
+      });
+      promise.then((res) => console.log(res.data));
+      promise.catch((err) => alert(err.response.data));
     } else {
-      console.log("Você não selecionou nenhum assento!");
+      console.log("dados invalidos");
     }
+  }
+
+  function handleChange(e) {
+    let { value } = e.target;
+    if (e.target.name === "name") setName(value);
+    else if (e.target.name === "cpf") {
+      value = value.replace(/\D/g, "").substring(0, 11);
+      setCpf(value);
+    }
+  }
+
+  function validadeInputs() {
+    return selectedSeats.length > 0 && cpf.length === 11 && name.length > 0;
   }
 
   useEffect(() => {
@@ -73,14 +94,21 @@ export default function Seats() {
       </CaptionsContainer>
       <InputsContainer>
         <InputTitle>Nome do comprador:</InputTitle>
-        <InputStyle placeholder="Digite seu nome..." />
+        <InputStyle
+          placeholder="Digite seu nome..."
+          value={name}
+          name="name"
+          onChange={handleChange}
+        />
         <InputTitle>CPF do comprador:</InputTitle>
-        <InputStyle placeholder="Digite seu CPF..." />
+        <InputStyle
+          placeholder="Digite seu CPF..."
+          value={cpf}
+          name="cpf"
+          onChange={handleChange}
+        />
       </InputsContainer>
-      <ReserveButton
-        disabled={selectedSeats.length === 0}
-        onClick={handleReservation}
-      >
+      <ReserveButton isEnabled={validadeInputs()} onClick={handleReservation}>
         Reservar assento(s)
       </ReserveButton>
     </>
@@ -91,6 +119,10 @@ const ReserveButton = styled(ButtonStyle)`
   width: 225px;
   margin-top: 50px;
   margin-bottom: 30px;
+  background-color: ${(props) => (props.isEnabled ? "#e8833a" : "#fCC66d")};
+  &:hover {
+    cursor: ${(props) => (props.isEnabled ? "pointer" : "default")};
+  }
 `;
 
 const SeatsContainer = styled.div`

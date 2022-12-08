@@ -41,8 +41,8 @@ export const InputStyle = styled.input`
   height: 51px;
   font-size: 18px;
   margin-bottom: 5px;
-  font-style: italic;
   &::placeholder {
+    font-style: italic;
     color: #d4d4d4;
   }
   border: 1px solid #d4d4d4;
