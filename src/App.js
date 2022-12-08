@@ -6,6 +6,7 @@ import Seats from "./components/Seats";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { URL } from "./consts";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [movies, setMovies] = useState(null);
@@ -19,14 +20,34 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <StyledApp>
-        <StyledHeader>CINEFLEX</StyledHeader>
-        <AppContent>
-          <Movies movies={movies} selectMovie={setSelectedMovie} />
-          <Sessions movie={selectedMovie} selectSession={setSelectedSession} />
-          <Seats session={selectedSession} />
-        </AppContent>
-      </StyledApp>
+      <BrowserRouter>
+        <StyledApp>
+          <StyledHeader>CINEFLEX</StyledHeader>
+          <AppContent>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Movies movies={movies} selectMovie={setSelectedMovie} />
+                }
+              />
+              <Route
+                path="/sessoes/:idFilme"
+                element={
+                  <Sessions
+                    movie={selectedMovie}
+                    selectSession={setSelectedSession}
+                  />
+                }
+              />
+              <Route
+                path="/assentos/:idSessao"
+                element={<Seats session={selectedSession} />}
+              />
+            </Routes>
+          </AppContent>
+        </StyledApp>
+      </BrowserRouter>
     </>
   );
 }

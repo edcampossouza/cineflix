@@ -9,23 +9,53 @@ import { URL } from "../consts";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
-export default function Seats({ session }) {
+export default function Seats() {
+  const { idSessao } = useParams();
   const [seats, setSeats] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  function handleClick(seat) {
+    if (!seat.isAvailable) alert("Esse assento não está disponível");
+    let newSelection = [...selectedSeats];
+    if (newSelection.includes(seat))
+      newSelection = newSelection.filter((s) => s !== seat);
+    else newSelection.push(seat);
+    setSelectedSeats(newSelection);
+  }
+
+  function handleReservation() {
+    if (selectedSeats.length !== 0) {
+      console.log(selectedSeats);
+    } else {
+      console.log("Você não selecionou nenhum assento!");
+    }
+  }
 
   useEffect(() => {
-    if (session) {
-      const promise = axios.get(`${URL}/showtimes/${session.id}/seats`);
+    if (idSessao) {
+      const promise = axios.get(`${URL}/showtimes/${idSessao}/seats`);
       promise.then((res) => setSeats(res.data));
     }
-  }, [session]);
+  }, [idSessao]);
+
   return (
     <>
       <PageTitle>Selecione o(s) assento(s)</PageTitle>
       <SeatsContainer>
         {seats === null
           ? "Carregando..."
-          : seats.seats.map((seat) => <SeatStyle>{seat.name}</SeatStyle>)}
+          : seats.seats.map((seat) => (
+              <SeatStyle
+                available={seat.isAvailable}
+                selected={selectedSeats.includes(seat)}
+                onClick={() => handleClick(seat)}
+                key={seat.id}
+              >
+                {seat.name}
+              </SeatStyle>
+            ))}
       </SeatsContainer>
       <CaptionsContainer>
         <div>
@@ -47,7 +77,12 @@ export default function Seats({ session }) {
         <InputTitle>CPF do comprador:</InputTitle>
         <InputStyle placeholder="Digite seu CPF..." />
       </InputsContainer>
-      <ReserveButton>Reservar assento(s)</ReserveButton>
+      <ReserveButton
+        disabled={selectedSeats.length === 0}
+        onClick={handleReservation}
+      >
+        Reservar assento(s)
+      </ReserveButton>
     </>
   );
 }
@@ -55,7 +90,8 @@ export default function Seats({ session }) {
 const ReserveButton = styled(ButtonStyle)`
   width: 225px;
   margin-top: 50px;
-`
+  margin-bottom: 30px;
+`;
 
 const SeatsContainer = styled.div`
   display: flex;
@@ -68,13 +104,19 @@ const SeatStyle = styled.div`
   height: 25px;
   border-radius: 13px;
   font-size: 11px;
-  background-color: #c3cfd9;
+  background-color: ${(props) =>
+    props.available ? (props.selected ? "#1AAE9E" : "#C3CFD9") : "#FBE192"};
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 7px;
   margin-bottom: 18px;
-  border: 1px solid #808f9d;
+  border: 1px solid
+    ${(props) =>
+      props.available ? (props.selected ? "#0E7D71" : "#808F9D") : "#F7C52B"};
+  &:hover {
+    cursor: ${(props) => (props.available ? "pointer" : "default")};
+  }
 `;
 
 const CaptionsContainer = styled.div`
@@ -89,6 +131,7 @@ const CaptionsContainer = styled.div`
     align-items: center;
   }
   span {
+    margin-top: 5px;
     font-size: 13px;
   }
 `;

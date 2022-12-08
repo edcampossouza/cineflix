@@ -4,18 +4,21 @@ import { PageTitle } from "./Styles";
 import { URL } from "../consts";
 import { ButtonStyle } from "./Styles";
 import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
-export default function Sessions({ movie, selectSession }) {
+export default function Sessions({ selectSession }) {
+  const { idFilme } = useParams();
   const [days, setDays] = useState(null);
+
   useEffect(() => {
-    if (movie) {
-      const promise = axios.get(`${URL}/movies/${movie.id}/showtimes`);
+    if (idFilme) {
+      const promise = axios.get(`${URL}/movies/${idFilme}/showtimes`);
       promise.then((res) => setDays(res.data.days));
     }
-  }, [movie]);
+  }, [idFilme]);
   return (
     <>
-      {movie && (
+      {days ? (
         <>
           <PageTitle>Selecione o horário</PageTitle>
           <div>
@@ -27,18 +30,19 @@ export default function Sessions({ movie, selectSession }) {
                   </Day>
                   <TimesContainer>
                     {day.showtimes.map((showTime) => (
-                      <ButtonStyle
-                        key={showTime.id}
-                        onClick={() => selectSession(showTime)}
-                      >
-                        {showTime.name}
-                      </ButtonStyle>
+                      <Link to={`/assentos/${showTime.id}`} key={showTime.id}>
+                        <ButtonStyle onClick={() => selectSession(showTime)}>
+                          {showTime.name}
+                        </ButtonStyle>
+                      </Link>
                     ))}
                   </TimesContainer>
                 </DayContainer>
               ))}
           </div>
         </>
+      ) : (
+        <span>Carregando...</span>
       )}
     </>
   );
@@ -57,8 +61,6 @@ const Day = styled.div`
 const TimesContainer = styled.div`
   margin-bottom: 22px;
 `;
-
-
 
 /*
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PageTitle } from "./Styles";
 export default function Movies({ movies, selectMovie }) {
@@ -8,9 +9,11 @@ export default function Movies({ movies, selectMovie }) {
         {movies === null
           ? "Carregando..."
           : movies.map((m) => (
-              <MovieCard onClick={() => selectMovie(m)} key={m.id}>
-                <img src={m.posterURL} alt={m.title} />
-              </MovieCard>
+              <Link to={`/sessoes/${m.id}`} key={m.id}>
+                <MovieCard onClick={() => selectMovie(m)}>
+                  <img src={m.posterURL} alt={m.title} />
+                </MovieCard>
+              </Link>
             ))}
       </MoviesContainer>
     </>
