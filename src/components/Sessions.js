@@ -4,11 +4,11 @@ import { PageTitle } from "./Styles";
 import { URL } from "../consts";
 import axios from "axios";
 
-export default function Sessions({ movie }) {
+export default function Sessions({ movie, selectSession }) {
   const [days, setDays] = useState(null);
   useEffect(() => {
     if (movie) {
-      const promise = axios.get(`${URL}/${movie.id}/showtimes`);
+      const promise = axios.get(`${URL}/movies/${movie.id}/showtimes`);
       promise.then((res) => setDays(res.data.days));
     }
   }, [movie]);
@@ -26,7 +26,12 @@ export default function Sessions({ movie }) {
                   </Day>
                   <TimesContainer>
                     {day.showtimes.map((showTime) => (
-                      <Time key={showTime.id}>{showTime.name}</Time>
+                      <Time
+                        key={showTime.id}
+                        onClick={() => selectSession(showTime)}
+                      >
+                        {showTime.name}
+                      </Time>
                     ))}
                   </TimesContainer>
                 </DayContainer>
