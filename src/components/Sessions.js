@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PageTitle } from "./Styles";
 import { URL } from "../consts";
+import { ButtonStyle } from "./Styles";
 import axios from "axios";
 
 export default function Sessions({ movie, selectSession }) {
@@ -26,12 +27,12 @@ export default function Sessions({ movie, selectSession }) {
                   </Day>
                   <TimesContainer>
                     {day.showtimes.map((showTime) => (
-                      <Time
+                      <ButtonStyle
                         key={showTime.id}
                         onClick={() => selectSession(showTime)}
                       >
                         {showTime.name}
-                      </Time>
+                      </ButtonStyle>
                     ))}
                   </TimesContainer>
                 </DayContainer>
@@ -57,19 +58,7 @@ const TimesContainer = styled.div`
   margin-bottom: 22px;
 `;
 
-const Time = styled.button`
-  background-color: #e8833a;
-  border-width: 0;
-  border-radius: 3px;
-  width: 83px;
-  height: 43px;
-  font-size: 18px;
-  color: #ffffff;
-  margin-right: 8px;
-  &:hover {
-    cursor: pointer;
-  }
-`;
+
 
 /*
 

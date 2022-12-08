@@ -1,4 +1,10 @@
-import { PageTitle } from "./Styles";
+import {
+  ButtonStyle,
+  InputsContainer,
+  InputStyle,
+  InputTitle,
+  PageTitle,
+} from "./Styles";
 import { URL } from "../consts";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -35,9 +41,22 @@ export default function Seats({ session }) {
           <span>Indisponível</span>
         </div>
       </CaptionsContainer>
+      <InputsContainer>
+        <InputTitle>Nome do comprador:</InputTitle>
+        <InputStyle placeholder="Digite seu nome..." />
+        <InputTitle>CPF do comprador:</InputTitle>
+        <InputStyle placeholder="Digite seu CPF..." />
+      </InputsContainer>
+      <ReserveButton>Reservar assento(s)</ReserveButton>
     </>
   );
 }
+
+const ReserveButton = styled(ButtonStyle)`
+  width: 225px;
+  margin-top: 50px;
+`
+
 const SeatsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -63,6 +82,7 @@ const CaptionsContainer = styled.div`
   max-width: 340px;
   display: flex;
   justify-content: space-around;
+  margin-bottom: 45px;
   div {
     display: flex;
     flex-direction: column;
