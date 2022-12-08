@@ -6,7 +6,7 @@ import { ButtonStyle } from "./Styles";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
-export default function Sessions({ selectSession }) {
+export default function Sessions({ selectSession, setReservedTime }) {
   const { idFilme } = useParams();
   const [days, setDays] = useState(null);
 
@@ -31,7 +31,12 @@ export default function Sessions({ selectSession }) {
                   <TimesContainer>
                     {day.showtimes.map((showTime) => (
                       <Link to={`/assentos/${showTime.id}`} key={showTime.id}>
-                        <ButtonStyle onClick={() => selectSession(showTime)}>
+                        <ButtonStyle
+                          onClick={() => {
+                            selectSession(showTime);
+                            setReservedTime(`${day.date} - ${showTime.name}`);
+                          }}
+                        >
                           {showTime.name}
                         </ButtonStyle>
                       </Link>

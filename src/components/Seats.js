@@ -9,14 +9,15 @@ import { URL } from "../consts";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-export default function Seats() {
+export default function Seats({ setReservedSeats, setPerson }) {
   const { idSessao } = useParams();
   const [seats, setSeats] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
+  const navigate = useNavigate();
 
   function handleClick(seat) {
     if (!seat.isAvailable) alert("Esse assento não está disponível");
@@ -34,7 +35,15 @@ export default function Seats() {
         name,
         cpf,
       });
-      promise.then((res) => console.log(res.data));
+      promise.then((res) => {
+        console.log(res.data);
+        setPerson({
+          name,
+          cpf,
+        });
+        setReservedSeats(selectedSeats.map((s) => s.name));
+        navigate("/sucesso");
+      });
       promise.catch((err) => alert(err.response.data));
     } else {
       console.log("dados invalidos");
