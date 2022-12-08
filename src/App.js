@@ -10,9 +10,10 @@ import { URL } from "./consts";
 function App() {
   const [movies, setMovies] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedSession, setSelectedSession] = useState(null);
 
   useEffect(() => {
-    const promise = axios.get(URL);
+    const promise = axios.get(`${URL}/movies/`);
     promise.then((res) => setMovies(res.data));
   }, []);
   return (
@@ -22,8 +23,8 @@ function App() {
         <StyledHeader>CINEFLEX</StyledHeader>
         <AppContent>
           <Movies movies={movies} selectMovie={setSelectedMovie} />
-          <Sessions movie={selectedMovie} />
-          <Seats />
+          <Sessions movie={selectedMovie} selectSession={setSelectedSession} />
+          <Seats session={selectedSession} />
         </AppContent>
       </StyledApp>
     </>
