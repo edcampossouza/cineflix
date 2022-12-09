@@ -127,7 +127,7 @@ export default function Seats({ setReservedSeats, setPerson }) {
 const ReserveButton = styled(ButtonStyle)`
   width: 225px;
   margin-top: 50px;
-  margin-bottom: 30px;
+  margin-bottom: 147px;
   background-color: ${(props) => (props.isEnabled ? "#e8833a" : "#fCC66d")};
   &:hover {
     cursor: ${(props) => (props.isEnabled ? "pointer" : "default")};

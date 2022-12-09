@@ -2,14 +2,14 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ButtonStyle, PageTitle } from "./Styles";
 
-export default function Success({ person, reservedSeats, movie, time }) {
+export default function Success({ person, reservedSeats, movie, session }) {
   return (
     <>
       <SuccessPageTitle>Pedido feito com sucesso!</SuccessPageTitle>
       <Container>
         <TitleStyle>Filme e sessão</TitleStyle>
         <TextStyle>{movie.title}</TextStyle>
-        <TextStyle>{time}</TextStyle>
+        <TextStyle>{`${session.date} - ${session.name}`}</TextStyle>
         <EmptySpace />
         <TitleStyle>Ingressos</TitleStyle>
         <TextStyle>

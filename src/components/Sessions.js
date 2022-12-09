@@ -21,7 +21,7 @@ export default function Sessions({ selectSession, setReservedTime }) {
       {days ? (
         <>
           <PageTitle>Selecione o horário</PageTitle>
-          <div>
+          <PageContainer>
             {days &&
               days.map((day) => (
                 <DayContainer key={day.id}>
@@ -33,7 +33,11 @@ export default function Sessions({ selectSession, setReservedTime }) {
                       <Link to={`/assentos/${showTime.id}`} key={showTime.id}>
                         <ButtonStyle
                           onClick={() => {
-                            selectSession(showTime);
+                            selectSession({
+                              ...showTime,
+                              weekday: day.weekday,
+                              date: day.date,
+                            });
                             setReservedTime(`${day.date} - ${showTime.name}`);
                           }}
                         >
@@ -44,7 +48,7 @@ export default function Sessions({ selectSession, setReservedTime }) {
                   </TimesContainer>
                 </DayContainer>
               ))}
-          </div>
+          </PageContainer>
         </>
       ) : (
         <span>Carregando...</span>
@@ -65,6 +69,10 @@ const Day = styled.div`
 
 const TimesContainer = styled.div`
   margin-bottom: 22px;
+`;
+
+const PageContainer = styled.div`
+  margin-bottom: 117px;
 `;
 
 /*

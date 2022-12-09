@@ -4,6 +4,7 @@ import Movies from "./components/Movies";
 import Sessions from "./components/Sessions";
 import Seats from "./components/Seats";
 import Success from "./components/Success";
+import Footer from "./components/Footer";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { URL } from "./consts";
@@ -13,7 +14,6 @@ function App() {
   const [movies, setMovies] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedSession, setSelectedSession] = useState(null);
-  const [reservedTime, setReservedTime] = useState("");
   const [person, setPerson] = useState({});
   const [reservedSeats, setReservedSeats] = useState([]);
 
@@ -39,19 +39,12 @@ function App() {
               />
               <Route
                 path="/sessoes/:idFilme"
-                element={
-                  <Sessions
-                    movie={selectedMovie}
-                    selectSession={setSelectedSession}
-                    setReservedTime={setReservedTime}
-                  />
-                }
+                element={<Sessions selectSession={setSelectedSession} />}
               />
               <Route
                 path="/assentos/:idSessao"
                 element={
                   <Seats
-                    session={selectedSession}
                     setPerson={setPerson}
                     setReservedSeats={setReservedSeats}
                   />
@@ -63,13 +56,14 @@ function App() {
                   <Success
                     movie={selectedMovie}
                     person={person}
-                    time={reservedTime}
+                    session={selectedSession}
                     reservedSeats={reservedSeats}
                   />
                 }
               />
             </Routes>
           </AppContent>
+          <Footer movie={selectedMovie} session={selectedSession} />
         </StyledApp>
       </BrowserRouter>
     </>
