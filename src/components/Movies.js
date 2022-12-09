@@ -9,7 +9,7 @@ export default function Movies({ movies, selectMovie }) {
         {movies === null
           ? "Carregando..."
           : movies.map((m) => (
-              <Link to={`/sessoes/${m.id}`} key={m.id}>
+              <Link to={`/sessoes/${m.id}`} key={m.id} data-test="movie">
                 <MovieCard onClick={() => selectMovie(m)}>
                   <img src={m.posterURL} alt={m.title} />
                 </MovieCard>

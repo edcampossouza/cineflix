@@ -5,7 +5,7 @@ export default function Footer({ movie, session }) {
   const { pathname } = useLocation();
   if (movie && (pathname.includes("sessoes") || pathname.includes("assentos")))
     return (
-      <FooterStyle>
+      <FooterStyle data-test="footer">
         <ImgContainer>
           <img src={movie.posterURL} alt={`poster for ${movie.title}`} />
         </ImgContainer>

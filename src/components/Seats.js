@@ -78,6 +78,7 @@ export default function Seats({ setReservedSeats, setPerson }) {
           ? "Carregando..."
           : seats.seats.map((seat) => (
               <SeatStyle
+                data-test="seat"
                 available={seat.isAvailable}
                 selected={selectedSeats.includes(seat)}
                 onClick={() => handleClick(seat)}
@@ -104,6 +105,7 @@ export default function Seats({ setReservedSeats, setPerson }) {
       <InputsContainer>
         <InputTitle>Nome do comprador:</InputTitle>
         <InputStyle
+          data-test="client-name"
           placeholder="Digite seu nome..."
           value={name}
           name="name"
@@ -111,13 +113,18 @@ export default function Seats({ setReservedSeats, setPerson }) {
         />
         <InputTitle>CPF do comprador:</InputTitle>
         <InputStyle
+          data-test="client-cpf"
           placeholder="Digite seu CPF..."
           value={cpf}
           name="cpf"
           onChange={handleChange}
         />
       </InputsContainer>
-      <ReserveButton isEnabled={validadeInputs()} onClick={handleReservation}>
+      <ReserveButton
+        isEnabled={validadeInputs()}
+        onClick={handleReservation}
+        data-test="book-seat-btn"
+      >
         Reservar assento(s)
       </ReserveButton>
     </>

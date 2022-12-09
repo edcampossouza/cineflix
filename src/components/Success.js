@@ -7,24 +7,30 @@ export default function Success({ person, reservedSeats, movie, session }) {
     <>
       <SuccessPageTitle>Pedido feito com sucesso!</SuccessPageTitle>
       <Container>
-        <TitleStyle>Filme e sessão</TitleStyle>
-        <TextStyle>{movie.title}</TextStyle>
-        <TextStyle>{`${session.date} - ${session.name}`}</TextStyle>
+        <div data-test="movie-info">
+          <TitleStyle>Filme e sessão</TitleStyle>
+          <TextStyle>{movie.title}</TextStyle>
+          <TextStyle>{`${session.date} - ${session.name}`}</TextStyle>
+        </div>
         <EmptySpace />
-        <TitleStyle>Ingressos</TitleStyle>
-        <TextStyle>
-          {reservedSeats.map((seat) => (
-            <div key={seat}>Assento {seat}</div>
-          ))}
-        </TextStyle>
+        <div data-test="seats-info">
+          <TitleStyle>Ingressos</TitleStyle>
+          <TextStyle>
+            {reservedSeats.map((seat) => (
+              <div key={seat}>Assento {seat}</div>
+            ))}
+          </TextStyle>
+        </div>
         <EmptySpace />
-        <TitleStyle>Comprador</TitleStyle>
-        <TextStyle>
-          <div>Nome: {person.name}</div>
-          <div>CPF: {person.cpf}</div>
-        </TextStyle>
+        <div data-test="client-info">
+          <TitleStyle>Comprador</TitleStyle>
+          <TextStyle>
+            <div>Nome: {person.name}</div>
+            <div>CPF: {person.cpf}</div>
+          </TextStyle>
+        </div>
       </Container>
-      <Link to="/">
+      <Link to="/" data-test="go-home-btn">
         <BackButtonStyle>Voltar pra Home</BackButtonStyle>
       </Link>
     </>

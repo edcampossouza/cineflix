@@ -24,14 +24,14 @@ export default function Sessions({ selectSession, setReservedTime }) {
           <PageContainer>
             {days &&
               days.map((day) => (
-                <DayContainer key={day.id}>
+                <DayContainer key={day.id} data-test="movie-day">
                   <Day>
                     {day.weekday} - {day.date}
                   </Day>
                   <TimesContainer>
                     {day.showtimes.map((showTime) => (
                       <Link to={`/assentos/${showTime.id}`} key={showTime.id}>
-                        <ButtonStyle
+                        <ButtonStyle data-test="showtime"
                           onClick={() => {
                             selectSession({
                               ...showTime,
