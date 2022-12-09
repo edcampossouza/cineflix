@@ -6,7 +6,7 @@ import { ButtonStyle } from "./Styles";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
-export default function Sessions({ selectSession, setReservedTime }) {
+export default function Sessions({ selectSession }) {
   const { idFilme } = useParams();
   const [days, setDays] = useState(null);
 
@@ -31,7 +31,8 @@ export default function Sessions({ selectSession, setReservedTime }) {
                   <TimesContainer>
                     {day.showtimes.map((showTime) => (
                       <Link to={`/assentos/${showTime.id}`} key={showTime.id}>
-                        <ButtonStyle data-test="showtime"
+                        <ButtonStyle
+                          data-test="showtime"
                           onClick={() => {
                             selectSession({
                               ...showTime,
@@ -73,9 +74,3 @@ const TimesContainer = styled.div`
 const PageContainer = styled.div`
   margin-bottom: 117px;
 `;
-
-/*
-
-
-[{"id":24102021,"weekday":"Domingo","date":"24/10/2021","showtimes":[{"name":"15:00","id":257},{"name":"19:00","id":258}]},{"id":25102021,"weekday":"Segunda-feira","date":"25/10/2021","showtimes":[{"name":"15:00","id":259},{"name":"19:00","id":260}]},{"id":26102021,"weekday":"Terça-feira","date":"26/10/2021","showtimes":[{"name":"15:00","id":261},{"name":"19:00","id":262}]},{"id":27102021,"weekday":"Quarta-feira","date":"27/10/2021","showtimes":[{"name":"15:00","id":263},{"name":"19:00","id":264}]},{"id":28102021,"weekday":"Quinta-feira","date":"28/10/2021","showtimes":[{"name":"15:00","id":265},{"name":"19:00","id":266}]},{"id":29102021,"weekday":"Sexta-feira","date":"29/10/2021","showtimes":[{"name":"15:00","id":267},{"name":"19:00","id":268}]},{"id":30102021,"weekday":"Sábado","date":"30/10/2021","showtimes":[{"name":"15:00","id":269},{"name":"19:00","id":270}]},{"id":31102021,"weekday":"Domingo","date":"31/10/2021","showtimes":[{"name":"15:00","id":271},{"name":"19:00","id":272}]}]
-*/

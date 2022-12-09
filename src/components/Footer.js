@@ -3,7 +3,10 @@ import { useLocation } from "react-router-dom";
 
 export default function Footer({ movie, session }) {
   const { pathname } = useLocation();
-  if (movie && (pathname.includes("sessoes") || pathname.includes("assentos")))
+  if (
+    movie &&
+    (pathname.includes("sessoes") || pathname.includes("assentos"))
+  ) {
     return (
       <FooterStyle data-test="footer">
         <ImgContainer>
@@ -15,6 +18,7 @@ export default function Footer({ movie, session }) {
         </div>
       </FooterStyle>
     );
+  }
   return null;
 }
 

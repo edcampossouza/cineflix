@@ -20,11 +20,15 @@ export default function Seats({ setReservedSeats, setPerson }) {
   const navigate = useNavigate();
 
   function handleClick(seat) {
-    if (!seat.isAvailable) alert("Esse assento não está disponível");
+    if (!seat.isAvailable) {
+      alert("Esse assento não está disponível");
+    }
     let newSelection = [...selectedSeats];
-    if (newSelection.includes(seat))
+    if (newSelection.includes(seat)) {
       newSelection = newSelection.filter((s) => s !== seat);
-    else newSelection.push(seat);
+    } else {
+      newSelection.push(seat);
+    }
     setSelectedSeats(newSelection);
   }
 
@@ -52,8 +56,9 @@ export default function Seats({ setReservedSeats, setPerson }) {
 
   function handleChange(e) {
     let { value } = e.target;
-    if (e.target.name === "name") setName(value);
-    else if (e.target.name === "cpf") {
+    if (e.target.name === "name") {
+      setName(value);
+    } else if (e.target.name === "cpf") {
       value = value.replace(/\D/g, "").substring(0, 11);
       setCpf(value);
     }
