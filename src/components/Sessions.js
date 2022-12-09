@@ -38,7 +38,6 @@ export default function Sessions({ selectSession, setReservedTime }) {
                               weekday: day.weekday,
                               date: day.date,
                             });
-                            setReservedTime(`${day.date} - ${showTime.name}`);
                           }}
                         >
                           {showTime.name}
